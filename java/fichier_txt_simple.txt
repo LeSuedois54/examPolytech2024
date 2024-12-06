@@ -1,0 +1,20 @@
+Qu'est ce que Docker ? A quoi cela sert-il ?
+Docker est un outil qui permet de créer et gérer des conteneurs.
+Ces conteneurs isolent les applications avec tout ce dont elles ont besoin pour fonctionner,
+garantissant qu'elles fonctionnent de la même manière sur tous les ordinateurs et serveurs.
+
+Qu'est ce que la CI et la CD ? Pourquoi est-ce utile ?
+La CI (Intégration Continue) c'est l'automatisation de l'intégration des modifications de code et des tests pour détecter rapidement les erreurs.
+Le CD (Déploiement Continu) c'est ce qui automatise le déploiement des modifications validées en production.
+
+Qu'avez vous pensez du cours ?
+Super chouette, bien expliqué bien qu'un peu rapide sur certains points.
+
+Surprenez moi
+ .-.
+(o o) boo!
+| O \
+ \   \
+  `~~~'
+Pusher votre code sur github avec votre fichier de réponse aux questions et envoyer moi les urls de vos repos github.
+C'est fait!

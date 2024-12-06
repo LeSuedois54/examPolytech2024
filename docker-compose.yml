@@ -1,0 +1,70 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_database
+    environment:
+      MYSQL_DATABASE: myDatabase
+      MYSQL_USER: myUser
+      MYSQL_PASSWORD: myPassword
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - network
+
+  java:
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    image: my-java-app
+    container_name: java_application
+    build:
+      context: /java
+      dockerfile: java/Dockerfile
+    ports:
+      - "8448:8448"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_NAME: myDatabase
+      DATABASE_USER: myUser
+      DATABASE_PASSWORD: myPassword
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8448/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - network
+
+  angular:
+    restart: always
+    depends_on:
+      java:
+        condition: service_healthy
+    build:
+      context: /angular
+      dockerfile: angular/Dockerfile
+    ports:
+      - "8080:80"
+    container_name: angular_application
+    environment:
+      - API_URL=http://java-service:8448
+    networks:
+      - network
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  network:
